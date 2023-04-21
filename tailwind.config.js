@@ -20,6 +20,11 @@ module.exports = {
                     dark: "#647196",
                 },
                 "theme-orange": "#F49F85",
+                gradientColors: {
+                    to: "#E84D70",
+                    via: "#A337F6",
+                    from: "#28A7ED",
+                },
             },
             fontFamily: {
                 sans: ["var(--font-jost)", ...fontFamily.sans],
