@@ -1,14 +1,28 @@
-import type { ReactElement } from "react";
-import type { NextPageWithLayout } from "./_app";
+import { useState } from "react";
 
-import MainLayout from "@/components/layouts/main";
+import Header from "../components/headers/MainHeader";
+import MobileSidebar from "../components/MobileSidebar";
 
-const Home: NextPageWithLayout = () => {
-    return <div>Hello World</div>;
-};
+const filters = ["All", "UI", "UX", "Enhancement", "Bug", "Feature"];
 
-Home.getLayout = function getLayout(page: ReactElement) {
-    return <MainLayout>{page}</MainLayout>;
+const Home = () => {
+    const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+    const [activeFilter, setActiveFilter] = useState("All");
+
+    return (
+        <div className="flex flex-col h-screen">
+            <Header isSideBarOpen={isSideBarOpen} setIsSideBarOpen={setIsSideBarOpen} />
+            <div className="relative flex-1 overflow-x-hidden">
+                <main className="flex-1">Hello world</main>
+                <MobileSidebar
+                    isSideBarOpen={isSideBarOpen}
+                    filters={filters}
+                    activeFilter={activeFilter}
+                    setActiveFilter={setActiveFilter}
+                />
+            </div>
+        </div>
+    );
 };
 
 export default Home;
