@@ -4,17 +4,16 @@ import Check from "./icons/Check";
 
 interface DropdownFilterProps {
     value: string;
+    options: string[];
     className?: string;
     onChange?: (value: string) => void;
 }
 
-const Options = ["Most upvotes", "Least Upvotes", "Most comments", "Least comments"];
-
-const DropdownFilter = ({ value, className, onChange }: DropdownFilterProps) => {
+const DropdownFilter = ({ value, options, className, onChange }: DropdownFilterProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const generateOptions = () => {
-        return Options.map((option) => {
+        return options.map((option) => {
             const isSelected = option === value;
 
             return (
@@ -46,19 +45,20 @@ const DropdownFilter = ({ value, className, onChange }: DropdownFilterProps) => 
     };
 
     return (
-        <div tabIndex={-1} className="inline-block">
-            <div
-                className="h-16 w-fit flex flex-row items-center justify-center text-white bg-theme-blue-dark rounded-xl px-4 select-none cursor-pointer"
-                onClick={handleClick}
-                onKeyDown={handleKeyDown}
-                tabIndex={0}
-            >
-                <div className="mr-1">Sort by</div>
-                <span>:</span>
-                <div className="mx-2 font-bold">{value}</div>
-                {isOpen ? <Arrow direction="up" /> : <Arrow direction="down" />}
-            </div>
-            {isOpen ? <ul className="bg-white rounded-xl w-[256px] mt-4 shadow-xl">{generateOptions()}</ul> : null}
+        <div
+            className={`w-fit flex flex-row items-center justify-center text-white rounded-xl select-none cursor-pointer relative bg-transparent focus:outline-none focus:border-transparent ${className}`}
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+        >
+            <div>Sort by :</div>
+            <div className="mx-2 font-bold">{value}</div>
+            {isOpen ? <Arrow direction="up" /> : <Arrow direction="down" />}
+            {isOpen ? (
+                <ul className="absolute bg-white rounded-xl w-[256px] mt-4 shadow-xl top-4 left-0">
+                    {generateOptions()}
+                </ul>
+            ) : null}
         </div>
     );
 };
